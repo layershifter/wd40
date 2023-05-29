@@ -56,5 +56,8 @@
   },
   "nx": {
     "targets": {}
+  },
+  "resolutions": {
+    "@vitest/snapshot@0.31.1": "patch:@vitest/snapshot@npm%3A0.31.1#./.yarn/patches/@vitest-snapshot-npm-0.31.1-70a6b169dc.patch"
   }
 }

@@ -3024,6 +3024,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@vitest/snapshot@patch:@vitest/snapshot@npm%3A0.31.1#./.yarn/patches/@vitest-snapshot-npm-0.31.1-70a6b169dc.patch::locator=wd40%40workspace%3A.":
+  version: 0.31.1
+  resolution: "@vitest/snapshot@patch:@vitest/snapshot@npm%3A0.31.1#./.yarn/patches/@vitest-snapshot-npm-0.31.1-70a6b169dc.patch::version=0.31.1&hash=843c56&locator=wd40%40workspace%3A."
+  dependencies:
+    magic-string: ^0.30.0
+    pathe: ^1.1.0
+    pretty-format: ^27.5.1
+  checksum: 0c8ec9ce604802e1a02842a50200fb2b60eb7125d4a20ba577e1983bf9cd33f4d9aa367de855ce4edf65540e0bd8b8ef4d30156058bc5ffe6d108dc4249ff730
+  languageName: node
+  linkType: hard
+
 "@vitest/spy@npm:0.31.1":
   version: 0.31.1
   resolution: "@vitest/spy@npm:0.31.1"

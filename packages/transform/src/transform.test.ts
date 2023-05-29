@@ -8,6 +8,29 @@ import { transform } from './transform';
 import type { ModuleConfig, ModuleRunner } from './types';
 import { createModuleRunner } from './evaluator/createModuleRunner';
 
+import * as url from 'node:url';
+import * as path from 'node:path';
+import * as fs from 'node:fs/promises';
+import * as prettier from 'prettier';
+
+const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
+const FIXTURES_DIR = path.join(__dirname, '..', '__fixtures__');
+
+const prettierConfig = JSON.parse(
+  await fs.readFile(path.resolve(__dirname, '../../../.prettierrc'), {
+    encoding: 'utf-8',
+  })
+);
+
+expect.addSnapshotSerializer({
+  serialize(val) {
+    return prettier.format(val, { ...prettierConfig, parser: 'typescript' });
+  },
+  test(val) {
+    return typeof val === 'string';
+  },
+});
+
 const moduleConfig: ModuleConfig[] = [
   {
     moduleName: '@griffel/core',
@@ -59,129 +82,51 @@ describe('transform', () => {
     await disposeRunner();
   });
 
-  it('transforms a module', async () => {
-    const sourceCode = `
-      import { makeStyles } from '@griffel/core'
-
-      const classes = makeStyles({ root: { color: 'red' } });
-
-      export function App() {
-        return React.createElement('div', { className: classes.root });
-      }
-    `;
-
+  it.only('transforms a module', async () => {
     const result = await transform({
       moduleConfig,
       filename: 'test.js',
-      sourceCode,
+      sourceCode: await fs.readFile(
+        path.join(FIXTURES_DIR, 'single-call', 'input.ts'),
+        'utf8'
+      ),
       runner,
     });
 
-    expect(result.code).toMatchInlineSnapshot(`
-      "
-            import { makeStyles } from '@griffel/core'
-
-            const classes = __styles([{
-        \\"root\\": {
-          \\"sj55zd\\": \\"fe3e8s9\\"
-        }
-      }, {
-        \\"d\\": [\\".fe3e8s9{color:red;}\\"]
-      }]);
-      ;
-
-            export function App() {
-              return React.createElement('div', { className: classes.root });
-            }
-          "
-    `);
+    await expect(result.code).toMatchFileSnapshot(
+      path.join(FIXTURES_DIR, 'single-call', 'output.ts')
+    );
   });
 
   it('transforms multiple calls in a module', async () => {
-    const sourceCode = `
-      import { makeStyles } from '@griffel/core'
-
-      const classesA = makeStyles({ root: { color: 'green' } });
-      const classesB = makeStyles({ root: { color: 'blue' } });
-
-      export function App() {
-        return React.createElement('div', { className: classes.root });
-      }
-    `;
-
     const result = await transform({
       moduleConfig,
-      filename: 'test2.js',
-      sourceCode,
+      filename: 'test.js',
+      sourceCode: await fs.readFile(
+        path.join(FIXTURES_DIR, 'multiple-calls', 'input.ts'),
+        'utf8'
+      ),
       runner,
     });
 
-    expect(result.code).toMatchInlineSnapshot(`
-      "
-            import { makeStyles } from '@griffel/core'
-
-            const classesA = __styles([{
-        \\"root\\": {
-          \\"sj55zd\\": \\"fka9v86\\"
-        }
-      }, {
-        \\"d\\": [\\".fka9v86{color:green;}\\"]
-      }]);
-      ;
-            const classesB = __styles([{
-        \\"root\\": {
-          \\"sj55zd\\": \\"f163i14w\\"
-        }
-      }, {
-        \\"d\\": [\\".f163i14w{color:blue;}\\"]
-      }]);
-      ;
-
-            export function App() {
-              return React.createElement('div', { className: classes.root });
-            }
-          "
-    `);
+    await expect(result.code).toMatchFileSnapshot(
+      path.join(FIXTURES_DIR, 'multiple-calls', 'output.ts')
+    );
   });
 
   it('transforms multiple specifiers in a module', async () => {
-    const sourceCode = `
-      import { makeStyles, makeResetStyles } from '@griffel/core'
-
-      const classesA = makeStyles({ root: { color: 'green' } });
-      const classesB = makeResetStyles({ color: 'blue' });
-
-      export function App() {
-        return React.createElement('div', { className: classes.root });
-      }
-    `;
-
     const result = await transform({
       moduleConfig,
-      filename: 'test3.js',
-      sourceCode,
+      filename: 'test.js',
+      sourceCode: await fs.readFile(
+        path.join(FIXTURES_DIR, 'multiple-specifiers', 'input.ts'),
+        'utf8'
+      ),
       runner,
     });
 
-    expect(result.code).toMatchInlineSnapshot(`
-      "
-            import { makeStyles, makeResetStyles } from '@griffel/core'
-
-            const classesA = __styles([{
-        \\"root\\": {
-          \\"sj55zd\\": \\"fka9v86\\"
-        }
-      }, {
-        \\"d\\": [\\".fka9v86{color:green;}\\"]
-      }]);
-      ;
-            const classesB = __resetStyles([\\"r14ksm7b\\", null, [\\".r14ksm7b{color:blue;}\\"]]);
-      ;
-
-            export function App() {
-              return React.createElement('div', { className: classes.root });
-            }
-          "
-    `);
+    await expect(result.code).toMatchFileSnapshot(
+      path.join(FIXTURES_DIR, 'multiple-specifiers', 'output.ts')
+    );
   });
 });

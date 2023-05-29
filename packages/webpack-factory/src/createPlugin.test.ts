@@ -197,7 +197,7 @@ function testFixture(fixtureName: string, options: CompileOptions = {}) {
     }
 
     if (outputPath) {
-      expect(resultModule).toMatchFileSnapshot(outputPath);
+      await expect(resultModule).toMatchFileSnapshot(outputPath);
       return;
     }
 
