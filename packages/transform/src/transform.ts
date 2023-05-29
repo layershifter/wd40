@@ -36,6 +36,12 @@ export async function transform(params: TransformParams) {
     allowHashBang: true,
   });
 
+  let idIndex = 0;
+
+  function generateIdentifier(value: string): string {
+    return `_${value}${idIndex++}`;
+  }
+
   const importDeclarations = program.body.reduce((acc, node) => {
     if (node.type !== 'ImportDeclaration') {
       return acc;
@@ -108,7 +114,13 @@ export async function transform(params: TransformParams) {
                   params,
                   {
                     addNamedImport: (module, name) => {
-                      code.append(`import { ${name} } from "${module}";\n`);
+                      const specifier = generateIdentifier(name);
+
+                      code.prepend(
+                        `import { ${name} as ${specifier} } from "${module}";\n`
+                      );
+
+                      return specifier;
                     },
                     replaceWith: (newNode) => {
                       code.update(parent.start, parent.end, generate(newNode));
