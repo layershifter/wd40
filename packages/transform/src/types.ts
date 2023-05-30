@@ -21,3 +21,4 @@ export type ModuleConfig = {
 };
 
 export type ModuleRunner = ViteNodeRunner;
+export type ModuleRunnerResolveId = ViteNodeRunner['options']['resolveId'];

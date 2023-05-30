@@ -220,4 +220,20 @@ function testFixture(fixtureName: string, options: CompileOptions = {}) {
 
 describe('webpackLoader', () => {
   testFixture('single-identifier');
+
+  testFixture('import-aliases', {
+    webpackConfig: {
+      resolve: {
+        alias: {
+          'non-existing-color-module': path.resolve(
+            __dirname,
+            '..',
+            '__fixtures__',
+            'import-aliases',
+            'color.ts'
+          ),
+        },
+      },
+    },
+  });
 });
