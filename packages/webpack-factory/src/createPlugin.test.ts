@@ -1,8 +1,8 @@
 import * as fs from 'fs';
-import { createFsFromVolume, Volume } from 'memfs';
+import { Volume, createFsFromVolume } from 'memfs';
 import * as path from 'path';
 import * as prettier from 'prettier';
-import webpack, { NormalModule } from 'webpack';
+import webpack from 'webpack';
 import { merge } from 'webpack-merge';
 
 import { TestPlugin, default as testLoader } from './TestPlugin';
@@ -16,6 +16,15 @@ const prettierConfig = JSON.parse(
     encoding: 'utf-8',
   })
 );
+
+expect.addSnapshotSerializer({
+  serialize(val) {
+    return prettier.format(val, { ...prettierConfig, parser: 'typescript' });
+  },
+  test(val) {
+    return typeof val === 'string';
+  },
+});
 
 async function compileSourceWithWebpack(
   entryPath: string,
@@ -64,6 +73,7 @@ async function compileSourceWithWebpack(
   const webpackConfig = merge(defaultConfig, options.webpackConfig || {});
   const compiler = webpack(webpackConfig);
 
+  // TODO: document the hack
   compiler.testLoader = testLoader;
 
   const virtualFsVolume = createFsFromVolume(new Volume());
@@ -113,7 +123,8 @@ async function compileSourceWithWebpack(
         );
         return;
       }
-      // console.log('e', entryModule.modules[0].source);
+
+      // TODO: WTF is happening there?
       resolve({ moduleSource: entryModule.modules[0].source as string });
     });
   });

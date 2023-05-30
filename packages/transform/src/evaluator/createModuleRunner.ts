@@ -1,7 +1,8 @@
 import { createServer } from 'vite';
-import { virtualModulePlugin } from './virtualModulePlugin';
-import { ViteNodeServer } from 'vite-node/server';
 import { ViteNodeRunner } from 'vite-node/client';
+import { ViteNodeServer } from 'vite-node/server';
+
+import { virtualModulePlugin } from './virtualModulePlugin';
 
 export async function createModuleRunner() {
   const server = await createServer({

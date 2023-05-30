@@ -1,6 +1,6 @@
 import type { ModuleRunner } from '../types';
-import { evaluateModule } from './evaluateModule';
 import { createModuleRunner } from './createModuleRunner';
+import { evaluateModule } from './evaluateModule';
 
 describe('evaluateModule', () => {
   let runner: ModuleRunner;

@@ -1,0 +1,24 @@
+{
+  "name": "@wd40-integrations-griffel",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "integrations/griffel/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["integrations/griffel/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nx/vite:test",
+      "outputs": ["coverage/integrations/griffel"],
+      "options": {
+        "passWithNoTests": true,
+        "reportsDirectory": "../../coverage/integrations/griffel"
+      }
+    }
+  },
+  "tags": []
+}

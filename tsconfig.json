@@ -9,6 +9,7 @@
     "strict": true,
     "skipLibCheck": true,
     "paths": {
+      "@wd40/integrations-griffel": ["./integrations/griffel/src/index.ts"],
       "@wd40/transform": ["./packages/transform/src/index.ts"],
       "@wd40/webpack-factory": ["./packages/webpack-factory/src/index.ts"]
     }

@@ -1,11 +1,11 @@
 import acorn, { parse } from 'acorn';
 import * as ESTree from 'estree';
 
+import { prepareModuleForEvaluation } from './prepareModuleForEvaluation';
+
 declare module 'acorn' {
   export function parse(s: string, o: acorn.Options): ESTree.Program;
 }
-
-import { prepareModuleForEvaluation } from './prepareModuleForEvaluation';
 
 describe('prepareModuleForEvaluation', () => {
   it('removes default exports', () => {

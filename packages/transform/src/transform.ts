@@ -1,12 +1,11 @@
 import acorn, { parse } from 'acorn';
-import * as ESTree from 'estree';
 import { generate } from 'astring';
+import * as ESTree from 'estree';
 import { asyncWalk } from 'estree-walker';
 import MagicString from 'magic-string';
 
 import { evaluateModule } from './evaluator/evaluateModule';
 import { prepareModuleForEvaluation } from './evaluator/prepareModuleForEvaluation';
-
 import type {
   ModuleConfig,
   ModuleRunner,

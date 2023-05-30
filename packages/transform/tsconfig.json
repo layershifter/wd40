@@ -15,7 +15,10 @@
     "esModuleInterop": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noImplicitReturns": true
+    "noImplicitReturns": true,
+    "paths": {
+      "@wd40/integrations-griffel": ["../../integrations/griffel/src/index.ts"]
+    }
   },
   "files": [],
   "include": ["src", "src"],

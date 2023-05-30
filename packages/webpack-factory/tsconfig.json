@@ -17,6 +17,7 @@
     "noUnusedParameters": true,
     "noImplicitReturns": true,
     "paths": {
+      "@wd40/integrations-griffel": ["../../integrations/griffel/src/index.ts"],
       "@wd40/transform": ["../transform/src/index.ts"]
     }
   },

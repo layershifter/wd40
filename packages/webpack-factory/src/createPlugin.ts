@@ -1,10 +1,11 @@
-import { createModuleRunner, transform } from '@wd40/transform';
-import type { ModuleConfig } from '@wd40/transform';
 import type {
   Compiler,
   LoaderContext,
   LoaderDefinitionFunction,
 } from 'webpack';
+
+import { createModuleRunner, transform } from '@wd40/transform';
+import type { ModuleConfig } from '@wd40/transform';
 
 export type WebpackLoaderOptions = Record<string, never>;
 

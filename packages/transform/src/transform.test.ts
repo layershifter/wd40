@@ -1,17 +1,13 @@
-import {
-  resolveStyleRulesForSlots,
-  resolveResetStyleRules,
-} from '@griffel/core';
-import { parse } from 'acorn';
-
-import { transform } from './transform';
-import type { ModuleConfig, ModuleRunner } from './types';
-import { createModuleRunner } from './evaluator/createModuleRunner';
-
-import * as url from 'node:url';
-import * as path from 'node:path';
 import * as fs from 'node:fs/promises';
+import * as path from 'node:path';
+import * as url from 'node:url';
 import * as prettier from 'prettier';
+
+import { moduleConfig } from '@wd40/integrations-griffel';
+
+import { createModuleRunner } from './evaluator/createModuleRunner';
+import { transform } from './transform';
+import type { ModuleRunner } from './types';
 
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 const prettierConfig = JSON.parse(
@@ -55,49 +51,6 @@ async function assertFixture(params: {
     );
   });
 }
-
-const moduleConfig: ModuleConfig[] = [
-  {
-    moduleName: '@griffel/core',
-    specifiers: {
-      makeStyles: async (node, parent, params, utils) => {
-        // console.log(params[0], resolveStyleRulesForSlots(params[0] as any));
-
-        const importName = utils.addNamedImport('@griffel/core', '__styles');
-        const [mapping, cssRules] = resolveStyleRulesForSlots(params[0] as any);
-
-        const ast = parse(
-          `${importName}(${JSON.stringify(mapping)}, ${JSON.stringify(
-            cssRules
-          )})`,
-          {
-            ecmaVersion: 'latest',
-            sourceType: 'module',
-          }
-        );
-
-        utils.replaceWith(ast);
-      },
-      makeResetStyles: async (node, parent, params, utils) => {
-        const importName = utils.addNamedImport(
-          '@griffel/core',
-          '__resetStyles'
-        );
-        const ast = parse(
-          `${importName}(${JSON.stringify(
-            resolveResetStyleRules(params[0] as any)
-          )})`,
-          {
-            ecmaVersion: 'latest',
-            sourceType: 'module',
-          }
-        );
-
-        utils.replaceWith(ast);
-      },
-    },
-  },
-];
 
 describe('transform', () => {
   beforeAll(async () => {
