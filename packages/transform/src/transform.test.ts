@@ -72,9 +72,26 @@ describe('transform', () => {
     description: 'transforms multiple calls in a module',
     name: 'multiple-calls',
   });
-
   assertFixture({
     description: 'transforms multiple specifiers in a module',
     name: 'multiple-specifiers',
   });
+
+  assertFixture({
+    // TODO
+    description: '',
+    name: 'import-alias',
+  });
+  assertFixture({
+    // TODO
+    description: '',
+    name: 'import-mixins',
+  });
+  assertFixture({
+    // TODO
+    description: '',
+    name: 'import-duplicates',
+  });
+
+  // TODO: tests for assets
 });

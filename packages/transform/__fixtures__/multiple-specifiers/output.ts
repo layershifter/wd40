@@ -1,6 +1,6 @@
 import { __resetStyles as ___resetStyles1 } from '@griffel/core';
 import { __styles as ___styles0 } from '@griffel/core';
-import { makeStyles, makeResetStyles } from '@griffel/core';
+import { makeResetStyles, makeStyles } from '@griffel/core';
 
 const classesA = ___styles0(
   {

@@ -73,6 +73,8 @@ export async function transform(params: TransformParams) {
   if (importDeclarations.size > 0) {
     // const { scope, map } = analyze(ast);
 
+    // TODO: improve identifier resolution between scopes
+
     // console.log(scope, importDeclarations);
 
     const code = new MagicString(sourceCode);

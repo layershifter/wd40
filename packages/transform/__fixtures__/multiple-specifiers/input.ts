@@ -1,4 +1,4 @@
-import { makeStyles, makeResetStyles } from '@griffel/core'
+import { makeResetStyles, makeStyles } from '@griffel/core';
 
 const classesA = makeStyles({ root: { color: 'green' } });
 const classesB = makeResetStyles({ color: 'blue' });
