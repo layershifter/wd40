@@ -236,4 +236,51 @@ describe('webpackLoader', () => {
       },
     },
   });
+  testFixture('import-resolve-plugins', {
+    webpackConfig: {
+      resolve: {
+        plugins: [
+          {
+            // Simple plugin that will detect the non-existent module we are testing for and replace with
+            // correct path from the fixture
+            apply: function (resolver) {
+              const target = resolver.ensureHook('resolve');
+
+              resolver
+                .getHook('before-resolve')
+                .tapAsync(
+                  'ResolveFallback',
+                  (request, resolveContext, callback) => {
+                    if (request.request === 'non-existing-color-module') {
+                      const obj = {
+                        directory: request.directory,
+                        path: request.path,
+                        query: request.query,
+                        request: path.resolve(
+                          __dirname,
+                          '..',
+                          '__fixtures__',
+                          'import-resolve-plugins',
+                          'color.ts'
+                        ),
+                      };
+
+                      return resolver.doResolve(
+                        target,
+                        obj,
+                        null,
+                        resolveContext,
+                        callback
+                      );
+                    }
+
+                    callback();
+                  }
+                );
+            },
+          },
+        ],
+      },
+    },
+  });
 });
