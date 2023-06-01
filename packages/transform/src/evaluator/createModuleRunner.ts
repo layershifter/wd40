@@ -14,7 +14,22 @@ export async function createModuleRunner(
     optimizeDeps: {
       disabled: true,
     },
-    plugins: [resolvePlugin({ resolveId: params.resolveId })],
+    plugins: [
+      {
+        name: 'sss',
+        transform(code, id) {
+          if (id.endsWith('.jpg')) {
+            return code.replace(
+              /export default "(.+).jpg"/,
+              'export default "@asset:$1.jpg"'
+            );
+          }
+
+          return null;
+        },
+      },
+      resolvePlugin({ resolveId: params.resolveId }),
+    ],
   });
 
   await server.pluginContainer.buildStart({});

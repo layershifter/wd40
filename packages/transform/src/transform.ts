@@ -109,11 +109,19 @@ export async function transform(params: TransformParams) {
               declaration,
               nodes: parent.arguments,
               handler: (params) =>
-                declaration.handler(
-                  args[0] as ESTree.Identifier,
+                declaration.handler({
+                  context: { filename, projectRoot: runner.root },
+                  node: args[0] as ESTree.Identifier,
                   parent,
                   params,
-                  {
+                  utils: {
+                    addDefaultImport: (name, module) => {
+                      const specifier = generateIdentifier(name);
+
+                      code.prepend(`import ${specifier} from "${module}";\n`);
+
+                      return specifier;
+                    },
                     addNamedImport: (module, name) => {
                       const specifier = generateIdentifier(name);
 
@@ -126,8 +134,8 @@ export async function transform(params: TransformParams) {
                     replaceWith: (newNode) => {
                       code.update(parent.start, parent.end, generate(newNode));
                     },
-                  }
-                ),
+                  },
+                }),
             });
             // console.log(map.get(parent))
           }

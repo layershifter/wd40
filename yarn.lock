@@ -2936,6 +2936,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/stylis@npm:^4.2.0":
+  version: 4.2.0
+  resolution: "@types/stylis@npm:4.2.0"
+  checksum: 02a47584acd2fcb664f7d8270a69686c83752bdfb855f804015d33116a2b09c0b2ac535213a4a7b6d3a78b2915b22b4024cce067ae979beee0e4f8f5fdbc26a9
+  languageName: node
+  linkType: hard
+
 "@types/yargs-parser@npm:*":
   version: 21.0.0
   resolution: "@types/yargs-parser@npm:21.0.0"
@@ -8208,7 +8215,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"stylis@npm:^4.0.13":
+"stylis@npm:^4.0.13, stylis@npm:^4.2.0":
   version: 4.2.0
   resolution: "stylis@npm:4.2.0"
   checksum: 0eb6cc1b866dc17a6037d0a82ac7fa877eba6a757443e79e7c4f35bacedbf6421fadcab4363b39667b43355cbaaa570a3cde850f776498e5450f32ed2f9b7584
@@ -9039,6 +9046,7 @@ __metadata:
     "@types/estree": ^1.0.1
     "@types/jest": ^29.4.0
     "@types/node": ^20.2.1
+    "@types/stylis": ^4.2.0
     "@typescript-eslint/eslint-plugin": ^5.58.0
     "@typescript-eslint/parser": ^5.58.0
     "@vitest/coverage-c8": ^0.31.0
@@ -9057,6 +9065,7 @@ __metadata:
     nx: 16.2.2
     periscopic: ^3.1.0
     prettier: ^2.8.8
+    stylis: ^4.2.0
     ts-jest: ^29.1.0
     ts-node: ^10.9.1
     tslib: ^2.3.0

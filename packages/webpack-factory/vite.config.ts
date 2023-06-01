@@ -11,7 +11,7 @@ export default defineConfig({
     cache: {
       dir: '../../node_modules/.vitest',
     },
-    environment: 'jsdom',
+    environment: 'node',
     include: ['src/**/*.test.ts'],
   },
   cacheDir: '../../node_modules/.vite/@wd40-webpack-factory',

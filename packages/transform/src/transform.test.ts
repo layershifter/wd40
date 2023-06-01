@@ -93,5 +93,27 @@ describe('transform', () => {
     name: 'import-duplicates',
   });
 
-  // TODO: tests for assets
+  // Assets handling
+
+  assertFixture({
+    // TODO
+    description: '',
+    name: 'assets',
+  });
+  assertFixture({
+    // TODO
+    description: '',
+    name: 'assets-multiple-declarations',
+  });
+  assertFixture({
+    // TODO
+    description: '',
+    name: 'assets-reset-styles',
+  });
+
+  assertFixture({
+    // TODO
+    description: '',
+    name: 'assets-urls',
+  });
 });
