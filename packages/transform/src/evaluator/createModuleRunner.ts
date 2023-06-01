@@ -3,7 +3,7 @@ import { ViteNodeRunner } from 'vite-node/client';
 import { ViteNodeServer } from 'vite-node/server';
 
 import type { ModuleRunnerResolveId } from '../types';
-import { virtualModulePlugin } from './virtualModulePlugin';
+import { resolvePlugin } from './resolvePlugin';
 
 export async function createModuleRunner(
   params: {
@@ -14,25 +14,7 @@ export async function createModuleRunner(
     optimizeDeps: {
       disabled: true,
     },
-    plugins: [
-      virtualModulePlugin,
-      {
-        name: 'resolve-plugin',
-        resolveId: (id, importer) => {
-          // TODO: Why this is required?
-          if (id.endsWith('.wd40.js')) {
-            return null;
-          }
-
-          if (params.resolveId) {
-            // TODO: any
-            return params.resolveId?.(id, importer) as any;
-          }
-
-          return null;
-        },
-      },
-    ],
+    plugins: [resolvePlugin({ resolveId: params.resolveId })],
   });
 
   await server.pluginContainer.buildStart({});

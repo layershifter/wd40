@@ -1,3 +1,4 @@
+import * as path from 'node:path';
 import type {
   Compiler,
   LoaderContext,
@@ -30,17 +31,22 @@ export function createPlugin(moduleConfig: ModuleConfig[]) {
             resolver.resolve(
               {},
               // TODO: handle normalization better
-              importer ? importer.replace('/@fs/', '') : '',
+              // TODO: handle normalization better
+              importer ? path.dirname(importer.replace('/@fs', '')) : '',
               id,
               {},
               (err, result) => {
                 if (err) {
+                  // console.log('id1', id);
+                  // console.log('importer1', importer);
+                  // console.log('--');
                   reject(err);
                   return;
                 }
 
                 // TODO: Handle null result
                 // TODO: Other resolve params
+                // console.log('result', result);
                 resolve({ id: result as string });
               }
             );
@@ -70,7 +76,7 @@ export function createPlugin(moduleConfig: ModuleConfig[]) {
     // Loaders are cacheable by default, but in edge cases/bugs when caching does not work until it's specified:
     // https://github.com/webpack/webpack/issues/14946
     this.cacheable();
-
+    // console.log('this.resourcePath', this.resourcePath);
     transform({
       sourceCode,
       filename: this.resourcePath,

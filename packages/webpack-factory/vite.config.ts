@@ -1,6 +1,6 @@
-import dts from 'vite-plugin-dts';
 import { joinPathFragments } from '@nx/devkit';
 import { defineConfig } from 'vite';
+import dts from 'vite-plugin-dts';
 import ViteTsConfigPathsPlugin from 'vite-tsconfig-paths';
 
 export default defineConfig({
@@ -16,18 +16,17 @@ export default defineConfig({
   },
   cacheDir: '../../node_modules/.vite/@wd40-webpack-factory',
   build: {
+    target: 'node16',
     lib: {
-      // Could also be a dictionary or array of multiple entry points.
       entry: 'src/index.ts',
       name: '@wd40-webpack-factory',
       fileName: 'index',
-      // Change this to the formats you want to support.
-      // Don't forgot to update your package.json as well.
-      formats: ['es', 'cjs'],
+      formats: ['cjs'],
     },
+    minify: false,
     rollupOptions: {
       // External packages that should not be bundled into your library.
-      external: [],
+      external: ['@wd40/transform', 'webpack'],
     },
   },
   plugins: [

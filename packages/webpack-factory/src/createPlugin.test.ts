@@ -1,16 +1,21 @@
 import * as fs from 'fs';
 import { Volume, createFsFromVolume } from 'memfs';
+import url from 'node:url';
 import * as path from 'path';
 import * as prettier from 'prettier';
 import webpack from 'webpack';
 import { merge } from 'webpack-merge';
 
+
+
 import { TestPlugin, default as testLoader } from './TestPlugin';
+
 
 type CompileOptions = {
   webpackConfig?: webpack.Configuration;
 };
 
+const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 const prettierConfig = JSON.parse(
   fs.readFileSync(path.resolve(__dirname, '../../../.prettierrc'), {
     encoding: 'utf-8',

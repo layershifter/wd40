@@ -169,5 +169,6 @@ export async function transform(params: TransformParams) {
 
   return {
     code: sourceCode,
+    map: null,
   };
 }

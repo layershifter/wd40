@@ -19,9 +19,6 @@
         "outputPath": "dist/packages/transform"
       },
       "configurations": {
-        "development": {
-          "mode": "development"
-        },
         "production": {
           "mode": "production"
         }
