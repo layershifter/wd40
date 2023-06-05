@@ -1,8 +1,8 @@
-import type { CSSRulesByBucket } from '@griffel/core';
 import * as ESTree from 'estree';
 import { walk } from 'estree-walker';
 import * as path from 'path';
-import { tokenize } from 'stylis';
+
+import { ASSET_PREFIX, ASSET_SUFFIX } from '@wd40/transform';
 
 import { absolutePathToRelative } from './absolutePathToRelative';
 
@@ -24,52 +24,46 @@ export function replaceAssetsWithImports(
   function buildTemplateLiteralFromValue(
     value: string
   ): ESTree.TemplateLiteral {
-    const tokens = tokenize(value);
-
     const quasis: ESTree.TemplateElement[] = [];
     const expressions: ESTree.Identifier[] = [];
 
-    let acc = '';
+    let offset = 0;
+    let index = 0;
 
-    for (let i = 0, l = tokens.length; i < l; i++) {
-      acc += tokens[i];
+    while (value.indexOf(ASSET_PREFIX, offset) !== -1) {
+      index = value.indexOf(ASSET_PREFIX, offset);
 
-      if (tokens[i] === 'url') {
-        const url = tokens[i + 1].slice(1, -1);
+      quasis.push({
+        type: 'TemplateElement',
+        value: { raw: value.slice(offset, index) },
+        tail: false,
+      });
 
-        if (url.startsWith('@asset') || url.startsWith('"@asset:')) {
-          // Handle `filter: url(./a.svg#id)`
-          const [pathname, hash] = url.split('#');
+      offset = value.indexOf(ASSET_SUFFIX, index) + ASSET_SUFFIX.length;
 
-          const relativePath = absolutePathToRelative(
-            path,
-            projectRoot,
-            filename,
-            pathname
-          );
-          const identifier = addDefaultImport('asset', relativePath);
+      const pathname = value.slice(
+        index + ASSET_PREFIX.length,
+        offset - ASSET_SUFFIX.length
+      );
+      const relativePath = absolutePathToRelative(
+        path,
+        projectRoot,
+        filename,
+        pathname
+      );
 
-          quasis.push({
-            type: 'TemplateElement',
-            value: { raw: acc + '(' },
-            tail: false,
-          });
+      const identifier = addDefaultImport('asset', relativePath);
 
-          expressions.push({
-            type: 'Identifier',
-            name: identifier,
-          });
-
-          acc = `${hash ? `#${hash}` : ''})`;
-          i++;
-        }
-      }
+      expressions.push({
+        type: 'Identifier',
+        name: identifier,
+      });
     }
 
     quasis.push({
       type: 'TemplateElement',
-      value: { raw: acc },
-      tail: true,
+      value: { raw: value.slice(offset) },
+      tail: false,
     });
 
     return {
@@ -80,9 +74,9 @@ export function replaceAssetsWithImports(
   }
 
   walk(node, {
-    enter(node, parent, prop, index) {
+    enter(node) {
       if (node.type === 'Literal' && typeof node.value === 'string') {
-        if (node.value.indexOf('url(') === -1) {
+        if (node.value.indexOf(ASSET_PREFIX) === -1) {
           return;
         }
 

@@ -3,6 +3,7 @@ import { ViteNodeRunner } from 'vite-node/client';
 import { ViteNodeServer } from 'vite-node/server';
 
 import type { ModuleRunnerResolveId } from '../types';
+import { assetExportPlugin } from './assetExportPlugin';
 import { resolvePlugin } from './resolvePlugin';
 
 export async function createModuleRunner(
@@ -15,19 +16,7 @@ export async function createModuleRunner(
       disabled: true,
     },
     plugins: [
-      {
-        name: 'sss',
-        transform(code, id) {
-          if (id.endsWith('.jpg')) {
-            return code.replace(
-              /export default "(.+).jpg"/,
-              'export default "@asset:$1.jpg"'
-            );
-          }
-
-          return null;
-        },
-      },
+      assetExportPlugin(),
       resolvePlugin({ resolveId: params.resolveId }),
     ],
   });

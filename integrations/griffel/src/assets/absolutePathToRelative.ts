@@ -4,11 +4,6 @@ export function absolutePathToRelative(
   filename: string,
   assetPath: string
 ) {
-  assetPath = assetPath
-    .replace('@asset:', '')
-    .replace(/^"/, '')
-    .replace(/"$/, '');
-
   const fileDirectory = path.dirname(filename);
   const absoluteAssetPath = path.join(projectRoot, assetPath);
 

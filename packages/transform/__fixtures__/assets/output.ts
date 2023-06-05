@@ -11,13 +11,13 @@ import empty from './empty.jpg';
 export const useStyles = ___styles0(
   {
     rootA: {
-      Bcmaq0h: 'f1h0eegb',
+      Bcmaq0h: 'f1k3ktak',
     },
     rootB: {
-      Bcmaq0h: 'fujxxyj',
+      Bcmaq0h: 'f1pyx8ag',
     },
     rootC: {
-      Bcmaq0h: 'fi1onvs',
+      Bcmaq0h: 'f1npowbt',
     },
     assetWithHash: {
       Bhu2qc9: 'f12vvth1',
@@ -25,10 +25,10 @@ export const useStyles = ___styles0(
   },
   {
     d: [
-      `.f1h0eegb{background-image:url(${_asset1});}`,
-      `.fujxxyj{background-image:url(${_asset2});}`,
-      `.fi1onvs{background-image:url(${_asset3});}`,
-      `.f12vvth1{-webkit-filter:url(./a.svg#a);filter:url(./a.svg#a);}`,
+      `.f1k3ktak{background-image:url(${_asset1});}`,
+      `.f1pyx8ag{background-image:url("${_asset2}");}`,
+      `.f1npowbt{background-image:url(${_asset3});}`,
+      '.f12vvth1{-webkit-filter:url(./a.svg#a);filter:url(./a.svg#a);}',
     ],
   }
 );
