@@ -16,15 +16,27 @@ declare module 'acorn' {
   export function parse(s: string, o: acorn.Options): ESTree.Program;
 }
 
+interface SourceMap {
+  mappings: string;
+  names: string[];
+  sources: string[];
+  version: number;
+}
+
 type TransformParams = {
   sourceCode: string;
+  sourceMap?: string | SourceMap;
+
   filename: string;
   moduleConfig: ModuleConfig[];
 
   runner: ModuleRunner;
 };
 
-export async function transform(params: TransformParams) {
+export async function transform(params: TransformParams): Promise<{
+  code: string;
+  map: null | SourceMap;
+}> {
   const { filename, moduleConfig, runner, sourceCode } = params;
 
   // TODO: do early exit if there are no imports
@@ -142,6 +154,8 @@ export async function transform(params: TransformParams) {
         }
       },
     });
+
+    // console.log('WALK END');
 
     const codeToEvaluate = prepareModuleForEvaluation(
       sourceCode,

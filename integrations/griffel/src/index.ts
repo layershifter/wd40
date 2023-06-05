@@ -23,7 +23,7 @@ export const moduleConfig: ModuleConfig[] = [
         const [mapping, cssRulesByBucket] =
           resolveStyleRulesForSlots(stylesBySlots);
 
-        const newNode = replaceAssetsWithImports(
+        const program = replaceAssetsWithImports(
           context.projectRoot,
           context.filename,
           parse(
@@ -38,7 +38,7 @@ export const moduleConfig: ModuleConfig[] = [
           utils.addDefaultImport
         );
 
-        utils.replaceWith(newNode);
+        utils.replaceWith(program.body[0]);
       },
       makeResetStyles: async ({ context, node, parent, params, utils }) => {
         const importName = utils.addNamedImport(
@@ -47,7 +47,7 @@ export const moduleConfig: ModuleConfig[] = [
         );
 
         const [ltr, rtl, cssRules] = resolveResetStyleRules(params[0] as any);
-        const newNode = replaceAssetsWithImports(
+        const program = replaceAssetsWithImports(
           context.projectRoot,
           context.filename,
           parse(
@@ -62,7 +62,7 @@ export const moduleConfig: ModuleConfig[] = [
           utils.addDefaultImport
         );
 
-        utils.replaceWith(newNode);
+        utils.replaceWith(program.body[0]);
       },
     },
   },

@@ -88,7 +88,7 @@ export function createPlugin(moduleConfig: ModuleConfig[]) {
       runner: (this._compiler as any).runner,
     })
       .then((result) => {
-        this.callback(null, result.code, result.map);
+        this.callback(null, result.code, result.map ?? undefined);
       })
       .catch((err) => {
         this.callback(err as Error);

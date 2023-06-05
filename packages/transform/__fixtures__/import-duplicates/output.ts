@@ -13,6 +13,7 @@ export const useClassesA = ___styles0(
     d: ['.fe3e8s9{color:red;}'],
   }
 );
+
 export const useClassesB = ___styles1(
   {
     root: {

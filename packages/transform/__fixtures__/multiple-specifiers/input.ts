@@ -1,8 +1,9 @@
 import { makeResetStyles, makeStyles } from '@griffel/core';
 
-const classesA = makeStyles({ root: { color: 'green' } });
-const classesB = makeResetStyles({ color: 'blue' });
+export const classesA = makeStyles({
+  root: { color: 'green' },
+});
 
-export function App() {
-  return React.createElement('div', { className: classes.root });
-}
+export const classesB = makeResetStyles({
+  color: 'blue',
+});

@@ -50,14 +50,19 @@ export function createPlugin(params: {
       await disposeRunner();
     },
 
-    transform(code, id) {
-      return transform({
-        sourceCode: code,
-        filename: id,
+    async transform(sourceCode, filename) {
+      const { code, map } = await transform({
+        sourceCode,
+        filename,
 
         moduleConfig: params.moduleConfig,
         runner,
       });
+
+      return {
+        code,
+        map,
+      };
     },
   };
 }
