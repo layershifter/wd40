@@ -6,10 +6,7 @@ import * as prettier from 'prettier';
 import webpack from 'webpack';
 import { merge } from 'webpack-merge';
 
-
-
 import { TestPlugin, default as testLoader } from './TestPlugin';
-
 
 type CompileOptions = {
   webpackConfig?: webpack.Configuration;
