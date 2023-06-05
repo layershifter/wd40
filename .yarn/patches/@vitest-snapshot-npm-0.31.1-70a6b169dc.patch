@@ -1,0 +1,12 @@
+diff --git a/dist/index.js b/dist/index.js
+index cb90628535807ce1cfd8497c55c0dff144696b45..1dca4e6b8b0b4dea1c4e9009c807d0bc43f66858 100644
+--- a/dist/index.js
++++ b/dist/index.js
+@@ -927,6 +927,7 @@ class SnapshotClient {
+       rawSnapshot.file = await snapshotState.environment.resolveRawPath(filepath, rawSnapshot.file);
+       rawSnapshot.content = await snapshotState.environment.readSnapshotFile(rawSnapshot.file) || void 0;
+     }
++    options.received = serialize(options.received);
+     return this.assert(options);
+   }
+   async resetCurrent() {

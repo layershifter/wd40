@@ -11,8 +11,9 @@
     "paths": {
       "@wd40/integrations-griffel": ["./integrations/griffel/src/index.ts"],
       "@wd40/transform": ["./packages/transform/src/index.ts"],
+      "@wd40/vite-factory": ["./packages/vite-factory/src/index.ts"],
       "@wd40/webpack-factory": ["./packages/webpack-factory/src/index.ts"],
-      "@wd40/vite-factory": ["./packages/vite-factory/src/index.ts"]
+      "@wd40/esbuild-factory": ["./packages/esbuild-factory/src/index.ts"]
     }
   }
 }
