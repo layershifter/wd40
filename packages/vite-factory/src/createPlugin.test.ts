@@ -5,7 +5,7 @@ import * as prettier from 'prettier';
 import { build } from 'vite';
 import type { InlineConfig } from 'vite';
 
-import { moduleConfig } from '@wd40/integrations-griffel';
+import { createModuleConfig } from '@wd40/integrations-griffel';
 
 import { createPlugin } from './createPlugin';
 
@@ -35,7 +35,10 @@ async function assertFixture(params: {
   it(`[${name}] ${description}`, async () => {
     const fixtureDirectory = path.join(__dirname, '..', '__fixtures__', name);
 
-    const plugin = createPlugin({ moduleConfig, pluginName: 'test' });
+    const plugin = createPlugin({
+      moduleConfig: createModuleConfig({ mode: 'compile-only' }),
+      pluginName: 'test',
+    });
     const result = await build({
       root: fixtureDirectory,
       logLevel: 'error',

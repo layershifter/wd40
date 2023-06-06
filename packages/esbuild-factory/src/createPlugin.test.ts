@@ -5,7 +5,7 @@ import path from 'node:path';
 import url from 'node:url';
 import * as prettier from 'prettier';
 
-import { moduleConfig } from '@wd40/integrations-griffel';
+import { createModuleConfig } from '@wd40/integrations-griffel';
 
 import { createPlugin } from './createPlugin';
 
@@ -36,7 +36,10 @@ async function assertFixture(params: {
     const fixtureDirectory = path.join(__dirname, '..', '__fixtures__', name);
     const distDirectory = path.join(fixtureDirectory, 'dist');
 
-    const plugin = createPlugin({ moduleConfig, pluginName: 'test' });
+    const plugin = createPlugin({
+      moduleConfig: createModuleConfig({ mode: 'compile-only' }),
+      pluginName: 'test',
+    });
 
     await build({
       entryPoints: [path.resolve(fixtureDirectory, 'code.ts')],

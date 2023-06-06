@@ -3,7 +3,7 @@ import * as path from 'node:path';
 import * as url from 'node:url';
 import * as prettier from 'prettier';
 
-import { moduleConfig } from '@wd40/integrations-griffel';
+import { createModuleConfig } from '@wd40/integrations-griffel';
 
 import { createModuleRunner } from './evaluator/createModuleRunner';
 import { transform } from './transform';
@@ -37,7 +37,7 @@ async function assertFixture(params: {
   it(`[${name}] ${description}`, async () => {
     const fixtureDirectory = path.join(__dirname, '..', '__fixtures__', name);
     const result = await transform({
-      moduleConfig,
+      moduleConfig: createModuleConfig({ mode: 'compile-only' }),
       filename: path.join(fixtureDirectory, 'input.ts'),
       sourceCode: await fs.readFile(
         path.join(fixtureDirectory, 'input.ts'),
@@ -75,6 +75,12 @@ describe('transform', () => {
   assertFixture({
     description: 'transforms multiple specifiers in a module',
     name: 'multiple-specifiers',
+  });
+
+  assertFixture({
+    // TODO
+    description: '',
+    name: 'rules-with-metadata',
   });
 
   assertFixture({
