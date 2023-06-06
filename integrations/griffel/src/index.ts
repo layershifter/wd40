@@ -1,4 +1,5 @@
 import {
+  normalizeCSSBucketEntry,
   resolveResetStyleRules,
   resolveStyleRulesForSlots,
 } from '@griffel/core';
@@ -128,6 +129,50 @@ export function createModuleConfig(options: {
 
             utils.addDefaultImport
           );
+
+          if (options.mode === 'extract-css') {
+            utils.appendCSSText(
+              Object.entries(cssRulesByBucket).reduce(
+                (acc, [cssBucketName, cssBucketRules]) => {
+                  if (cssBucketName === 'm') {
+                    return (
+                      acc +
+                      cssBucketRules
+                        .map((entry) => {
+                          return [
+                            `/** @griffel:css-start [${cssBucketName}] [${JSON.stringify(
+                              entry[1]
+                            )}] **/`,
+                            normalizeCSSBucketEntry(entry)[0],
+                            `/** @griffel:css-end **/`,
+                            '',
+                          ]
+                            .join('\n')
+                            .replace(/@wd40-asset:/g, '')
+                            .replace(/:@wd40-asset/g, '');
+                        })
+                        .join('')
+                    );
+                  }
+
+                  return (
+                    acc +
+                    [
+                      `/** @griffel:css-start [${cssBucketName}] **/`,
+                      cssBucketRules
+                        .flatMap((entry) => normalizeCSSBucketEntry(entry))
+                        .join('')
+                        .replace(/@wd40-asset:/g, '')
+                        .replace(/:@wd40-asset/g, ''),
+                      `/** @griffel:css-end **/`,
+                      '',
+                    ].join('\n')
+                  );
+                },
+                ''
+              )
+            );
+          }
 
           utils.replaceWith(newNode);
         },

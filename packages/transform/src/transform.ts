@@ -36,6 +36,7 @@ type TransformParams = {
 export async function transform(params: TransformParams): Promise<{
   code: string;
   map: null | SourceMap;
+  cssText: string;
 }> {
   const { filename, moduleConfig, runner, sourceCode } = params;
 
@@ -48,6 +49,7 @@ export async function transform(params: TransformParams): Promise<{
   });
 
   let idIndex = 0;
+  let cssText = '';
 
   function generateIdentifier(value: string): string {
     return `_${value}${idIndex++}`;
@@ -146,6 +148,9 @@ export async function transform(params: TransformParams): Promise<{
                     replaceWith: (newNode) => {
                       code.update(parent.start, parent.end, generate(newNode));
                     },
+                    appendCSSText: (text) => {
+                      cssText += text;
+                    },
                   },
                 }),
             });
@@ -186,11 +191,13 @@ export async function transform(params: TransformParams): Promise<{
     return {
       code: code.toString(),
       map: code.generateMap(),
+      cssText,
     };
   }
 
   return {
     code: sourceCode,
     map: null,
+    cssText,
   };
 }

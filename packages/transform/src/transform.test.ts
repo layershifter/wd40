@@ -18,7 +18,10 @@ const prettierConfig = JSON.parse(
 
 expect.addSnapshotSerializer({
   serialize(val) {
-    return prettier.format(val, { ...prettierConfig, parser: 'typescript' });
+    return prettier.format(val, {
+      ...prettierConfig,
+      parser: val.includes('import ') ? 'typescript' : 'css',
+    });
   },
   test(val) {
     return typeof val === 'string';
@@ -31,13 +34,14 @@ let disposeRunner: () => Promise<void>;
 async function assertFixture(params: {
   name: string;
   description: string;
+  mode?: 'compile-only' | 'extract-css';
 }): Promise<void> {
-  const { name, description } = params;
+  const { name, description, mode = 'compile-only' } = params;
 
   it(`[${name}] ${description}`, async () => {
     const fixtureDirectory = path.join(__dirname, '..', '__fixtures__', name);
     const result = await transform({
-      moduleConfig: createModuleConfig({ mode: 'compile-only' }),
+      moduleConfig: createModuleConfig({ mode }),
       filename: path.join(fixtureDirectory, 'input.ts'),
       sourceCode: await fs.readFile(
         path.join(fixtureDirectory, 'input.ts'),
@@ -49,6 +53,12 @@ async function assertFixture(params: {
     await expect(result.code).toMatchFileSnapshot(
       path.join(fixtureDirectory, 'output.ts')
     );
+
+    if (mode === 'extract-css') {
+      await expect(result.cssText).toMatchFileSnapshot(
+        path.join(fixtureDirectory, 'output.css')
+      );
+    }
   });
 }
 
@@ -121,5 +131,24 @@ describe('transform', () => {
     // TODO
     description: '',
     name: 'assets-urls',
+  });
+
+  assertFixture({
+    // TODO
+    description: '',
+    name: 'mode-css-simple',
+    mode: 'extract-css',
+  });
+  assertFixture({
+    // TODO
+    description: '',
+    name: 'mode-css-assets',
+    mode: 'extract-css',
+  });
+  assertFixture({
+    // TODO
+    description: '',
+    name: 'mode-css-rules-with-metadata',
+    mode: 'extract-css',
   });
 });

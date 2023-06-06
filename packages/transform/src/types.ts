@@ -2,8 +2,11 @@ import * as ESTree from 'estree';
 import type { ViteNodeRunner } from 'vite-node/client';
 
 export type TransformUtils = {
+  appendCSSText: (text: string) => void;
+
   addDefaultImport: (specifier: string, moduleName: string) => string;
   addNamedImport: (specifier: string, moduleName: string) => string;
+
   replaceWith: (newNode: ESTree.Node) => void;
 };
 
