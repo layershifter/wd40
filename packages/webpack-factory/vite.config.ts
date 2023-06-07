@@ -26,7 +26,7 @@ export default defineConfig({
     minify: false,
     rollupOptions: {
       // External packages that should not be bundled into your library.
-      external: ['@wd40/transform', 'webpack'],
+      external: ['node:path', '@wd40/transform', 'webpack'],
     },
   },
   plugins: [

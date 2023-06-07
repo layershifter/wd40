@@ -1,6 +1,6 @@
 import * as ESTree from 'estree';
 import { walk } from 'estree-walker';
-import * as path from 'path';
+import * as path from 'node:path';
 
 import { ASSET_PREFIX, ASSET_SUFFIX } from '@wd40/transform';
 

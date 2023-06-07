@@ -4,6 +4,13 @@
   "sourceRoot": "integrations/griffel/src",
   "projectType": "library",
   "targets": {
+    "build": {
+      "executor": "@nx/vite:build",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/integrations/griffel"
+      }
+    },
     "lint": {
       "executor": "@nx/linter:eslint",
       "outputs": ["{options.outputFile}"],
