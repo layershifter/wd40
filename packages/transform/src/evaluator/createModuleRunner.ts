@@ -5,6 +5,7 @@ import path from 'node:path';
 import vm from 'node:vm';
 import * as process from 'process';
 import { rollup } from 'rollup';
+import type { RollupCache } from 'rollup';
 import { swc } from 'rollup-plugin-swc3';
 
 import type { ModuleRunnerResolveId } from '../types';
@@ -19,11 +20,15 @@ export async function createModuleRunner(
   // let bundle;
   // let buildFailed = false;
 
+  let cache: RollupCache | undefined;
+
   const runner = {
     root: process.cwd(),
     executeFile: async (filename: string): Promise<unknown> => {
       const bundle = await rollup({
+        cache,
         input: filename,
+        treeshake: 'smallest',
         plugins: [
           assetPlugin(),
           resolvePlugin({ resolveId: params.resolveId }),
@@ -35,6 +40,8 @@ export async function createModuleRunner(
           nodeResolve({ extensions: ['.js', '.ts', '.tsx', '.jsx'] }),
         ],
       });
+
+      cache = bundle.cache;
 
       const output = await bundle.generate({
         generatedCode: 'es2015',

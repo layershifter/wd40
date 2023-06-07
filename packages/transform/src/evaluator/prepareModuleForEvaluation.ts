@@ -4,7 +4,8 @@ import MagicString from 'magic-string';
 export function prepareModuleForEvaluation(
   sourceCode: string,
   program: ESTree.Program,
-  nodes: ESTree.Node[]
+  nodes: ESTree.Node[],
+  nodesForRemoval?: ESTree.Node[]
 ): string {
   const magicString = new MagicString(sourceCode);
 
@@ -25,16 +26,19 @@ export function prepareModuleForEvaluation(
     }
   });
 
-  const moduleContent = magicString.toString();
-
-  return (
-    moduleContent +
-    `
+  const footer = `
     export const __module = [
         ${nodes
           .map((node) => magicString.slice(node.start, node.end))
           .join(',')}
     ];
-  `
-  );
+  `;
+
+  nodesForRemoval?.forEach((node) => {
+    magicString.overwrite(node.start, node.end, 'void 0');
+  });
+
+  const moduleContent = magicString.toString();
+
+  return moduleContent + footer;
 }

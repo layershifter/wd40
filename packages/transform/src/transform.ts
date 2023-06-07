@@ -95,6 +95,7 @@ export async function transform(params: TransformParams): Promise<{
     const evaluations: {
       declaration: any;
       nodes: ESTree.Node[];
+      nodesForRemoval: ESTree.Node[];
       handler: any;
     }[] = [];
 
@@ -122,6 +123,7 @@ export async function transform(params: TransformParams): Promise<{
             evaluations.push({
               declaration,
               nodes: parent.arguments,
+              nodesForRemoval: [parent],
               handler: (params) =>
                 declaration.handler({
                   context: { filename, projectRoot: runner.root },
@@ -165,7 +167,8 @@ export async function transform(params: TransformParams): Promise<{
     const codeToEvaluate = prepareModuleForEvaluation(
       sourceCode,
       program,
-      evaluations.flatMap((evaluation) => evaluation.nodes)
+      evaluations.flatMap((evaluation) => evaluation.nodes),
+      evaluations.flatMap((evaluation) => evaluation.nodesForRemoval)
     );
     // console.log(
     //   'codeToEvaluate',
