@@ -1,6 +1,6 @@
 import * as path from 'node:path';
 import * as url from 'node:url';
-import type { Plugin } from 'vite';
+import type { Plugin } from 'rollup';
 
 import type { ModuleRunnerResolveId } from '../types';
 
@@ -66,42 +66,39 @@ export const resolvePlugin = (
   } = {}
 ): Plugin => ({
   name: 'wd40:resolve-plugin',
-  resolveId: {
-    order: 'pre',
-    handler(id, importer) {
-      const virtualId = id.split('/').pop();
+  resolveId(id, importer) {
+    // console.log('resolvePlugin:id', id);
+    // console.log('resolvePlugin:importer', importer);
 
-      if (typeof virtualId === undefined) {
-        throw new Error('virtualId is undefined');
-      }
+    if (VIRTUAL_MODULES.has(id)) {
+      // console.log('resolvePlugin:virtualId', virtualId);
+      return id;
+    }
 
-      if (VIRTUAL_MODULES.has(virtualId as string)) {
-        return '\0virtual:' + virtualId;
-      }
+    // console.log('resolvePlugin:id', id);
+    // console.log('resolvePlugin:importer', importer);
+    // console.log('---');
 
-      // console.log('resolvePlugin:id', id);
-      // console.log('resolvePlugin:importer', importer);
-      // console.log('---');
+    if (params.resolveId && !id.includes('wd40.ts')) {
+      // TODO: any
+      // console.log('resolvePlugin:resolveId', id, importer);
 
-      if (params.resolveId && !virtualId.includes('wd40.js')) {
-        // TODO: any
-        return params.resolveId?.(
-          // TODO: WTF is happening here?
-          toFilePath(normalizeRequestId(id), process.cwd()),
-          importer
-        ) as any;
-      }
+      return params.resolveId?.(
+        // TODO: WTF is happening here?
+        toFilePath(normalizeRequestId(id), process.cwd()),
+        importer
+      ) as any;
+    }
 
-      return null;
-    },
+    return null;
   },
   load(id) {
-    return VIRTUAL_MODULES.get(id.replace('\0virtual:', ''));
+    return VIRTUAL_MODULES.get(id.replace('\0', ''));
   },
 });
 
 export function addVirtualModule(filename: string, content: string) {
-  const virtualModuleName = filename + '.wd40.js';
+  const virtualModuleName = filename + '.wd40.ts';
 
   VIRTUAL_MODULES.set(virtualModuleName, content);
 

@@ -1,5 +1,5 @@
 export { createModuleRunner } from './evaluator/createModuleRunner';
-export { ASSET_PREFIX, ASSET_SUFFIX } from './evaluator/assetExportPlugin';
+export { ASSET_PREFIX, ASSET_SUFFIX } from './evaluator/assetPlugin';
 export { transform } from './transform';
 
 export type {

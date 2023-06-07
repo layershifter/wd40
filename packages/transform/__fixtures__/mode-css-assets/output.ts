@@ -7,13 +7,13 @@ import empty from './empty.jpg';
 
 export const useStyles = ___css0({
   rootA: {
-    Bcmaq0h: 'fg7lip3',
+    Bcmaq0h: 'fs2g817',
   },
   rootB: {
-    Bcmaq0h: 'f1qy49ta',
+    Bcmaq0h: 'f136a0ba',
   },
   rootC: {
-    Bcmaq0h: 'f16ks0gu',
+    Bcmaq0h: 'f4tjn73',
   },
   assetWithHash: {
     Bhu2qc9: 'f12vvth1',

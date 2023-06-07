@@ -1,5 +1,3 @@
-import type { ViteNodeRunner } from 'vite-node/client';
-
 import { addVirtualModule } from './resolvePlugin';
 
 export async function evaluateModule<T>(

@@ -172,6 +172,7 @@ export async function transform(params: TransformParams): Promise<{
     //   codeToEvaluate,
     //   evaluations.map((evaluation) => evaluation.nodes.length)
     // );
+    // console.log('transform:filename', filename);
     const { __module: result } = await evaluateModule<{ __module: unknown[] }>(
       filename,
       codeToEvaluate,
