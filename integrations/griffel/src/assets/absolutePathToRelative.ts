@@ -2,10 +2,10 @@ export function absolutePathToRelative(
   path: typeof import('path'),
   projectRoot: string,
   filename: string,
-  absoluteAssetPath: string
+  assetPath: string
 ) {
   const fileDirectory = path.dirname(filename);
-  // const absoluteAssetPath = path.join(projectRoot, assetPath);
+  const absoluteAssetPath = path.join(projectRoot, assetPath);
 
   let relativeAssetPath = path.relative(fileDirectory, absoluteAssetPath);
 

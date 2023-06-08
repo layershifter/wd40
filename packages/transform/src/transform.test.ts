@@ -74,40 +74,40 @@ describe('transform', () => {
     await disposeRunner();
   });
 
-  // assertFixture({
-  //   description: 'transforms a module',
-  //   name: 'single-call',
-  // });
-  // assertFixture({
-  //   description: 'transforms multiple calls in a module',
-  //   name: 'multiple-calls',
-  // });
-  // assertFixture({
-  //   description: 'transforms multiple specifiers in a module',
-  //   name: 'multiple-specifiers',
-  // });
-  //
-  // assertFixture({
-  //   // TODO
-  //   description: '',
-  //   name: 'rules-with-metadata',
-  // });
-  //
-  // assertFixture({
-  //   // TODO
-  //   description: '',
-  //   name: 'import-alias',
-  // });
-  // assertFixture({
-  //   // TODO
-  //   description: '',
-  //   name: 'import-mixins',
-  // });
-  // assertFixture({
-  //   // TODO
-  //   description: '',
-  //   name: 'import-duplicates',
-  // });
+  assertFixture({
+    description: 'transforms a module',
+    name: 'single-call',
+  });
+  assertFixture({
+    description: 'transforms multiple calls in a module',
+    name: 'multiple-calls',
+  });
+  assertFixture({
+    description: 'transforms multiple specifiers in a module',
+    name: 'multiple-specifiers',
+  });
+
+  assertFixture({
+    // TODO
+    description: '',
+    name: 'rules-with-metadata',
+  });
+
+  assertFixture({
+    // TODO
+    description: '',
+    name: 'import-alias',
+  });
+  assertFixture({
+    // TODO
+    description: '',
+    name: 'import-mixins',
+  });
+  assertFixture({
+    // TODO
+    description: '',
+    name: 'import-duplicates',
+  });
 
   // Assets handling
 
