@@ -35,10 +35,12 @@ async function assertFixture(params: {
   name: string;
   description: string;
   mode?: 'compile-only' | 'extract-css';
+  only?: boolean;
 }): Promise<void> {
-  const { name, description, mode = 'compile-only' } = params;
+  const { name, description, mode = 'compile-only', only } = params;
+  const assert = only ? it.only : it;
 
-  it(`[${name}] ${description}`, async () => {
+  assert(`[${name}] ${description}`, async () => {
     const fixtureDirectory = path.join(__dirname, '..', '__fixtures__', name);
     const result = await transform({
       moduleConfig: createModuleConfig({ mode }),
@@ -133,6 +135,7 @@ describe('transform', () => {
     name: 'assets-urls',
   });
 
+  // Mode CSS
   assertFixture({
     // TODO
     description: '',
@@ -150,5 +153,13 @@ describe('transform', () => {
     description: '',
     name: 'mode-css-rules-with-metadata',
     mode: 'extract-css',
+  });
+
+  // DOM
+  assertFixture({
+    // TODO
+    description: '',
+    name: 'side-effects-dom',
+    only: true,
   });
 });

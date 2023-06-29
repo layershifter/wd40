@@ -2,6 +2,7 @@ import { createServer } from 'vite';
 import { ViteNodeRunner } from 'vite-node/client';
 import { ViteNodeServer } from 'vite-node/server';
 
+import { postProcess } from '../process/postProcess';
 import type { ModuleRunnerResolveId } from '../types';
 import { assetExportPlugin } from './assetExportPlugin';
 import { resolvePlugin } from './resolvePlugin';
@@ -13,11 +14,21 @@ export async function createModuleRunner(
 ) {
   const server = await createServer({
     optimizeDeps: {
-      disabled: true,
+      // disabled: true,
     },
     plugins: [
       assetExportPlugin(),
       resolvePlugin({ resolveId: params.resolveId }),
+      {
+        name: 'test',
+        enforce: 'post',
+        transform(code, id) {
+          return postProcess(code);
+        },
+        moduleParsed(info) {
+          console.log(info);
+        },
+      },
     ],
   });
 
