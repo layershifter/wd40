@@ -1,10 +1,10 @@
-let isHidden: boolean = document.visibilityState !== 'visible';
+let isHidden = document.visibilityState !== 'visible';
 
 document.addEventListener('visibilitychange', () => {
   isHidden = document.visibilityState !== 'visible';
 });
 
-export function runNearFramePaint(callback: () => void) {
+export function runNearFramePaint(callback) {
   if (isHidden) {
     return;
   }

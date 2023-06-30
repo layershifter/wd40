@@ -4,13 +4,9 @@ import * as ESTree from 'estree';
 import { asyncWalk } from 'estree-walker';
 import MagicString from 'magic-string';
 
-import { evaluateModule } from './evaluator/evaluateModule';
 import { prepareModuleForEvaluation } from './evaluator/prepareModuleForEvaluation';
-import type {
-  ModuleConfig,
-  ModuleRunner,
-  ModuleSpecifierHandler,
-} from './types';
+import { evaluateModule } from './runner/evaluateModule';
+import type { ModuleConfig, ModuleSpecifierHandler } from './types';
 
 declare module 'acorn' {
   export function parse(s: string, o: acorn.Options): ESTree.Program;
@@ -29,8 +25,6 @@ type TransformParams = {
 
   filename: string;
   moduleConfig: ModuleConfig[];
-
-  runner: ModuleRunner;
 };
 
 export async function transform(params: TransformParams): Promise<{
@@ -38,7 +32,7 @@ export async function transform(params: TransformParams): Promise<{
   map: null | SourceMap;
   cssText: string;
 }> {
-  const { filename, moduleConfig, runner, sourceCode } = params;
+  const { filename, moduleConfig, sourceCode } = params;
 
   // TODO: do early exit if there are no imports
 
@@ -126,7 +120,7 @@ export async function transform(params: TransformParams): Promise<{
               nodesForRemoval: [parent],
               handler: (params) =>
                 declaration.handler({
-                  context: { filename, projectRoot: runner.root },
+                  context: { filename, projectRoot: '' },
                   node: args[0] as ESTree.Identifier,
                   parent,
                   params,
@@ -177,9 +171,9 @@ export async function transform(params: TransformParams): Promise<{
     // );
     // console.log('transform:filename', filename);
     const { __module: result } = await evaluateModule<{ __module: unknown[] }>(
-      filename,
       codeToEvaluate,
-      runner
+      filename,
+      ['__module']
     );
 
     for (let i = 0, offset = 0; i < evaluations.length; i++) {

@@ -1,8 +1,6 @@
-import type { GriffelStyle } from '@griffel/core';
-
 import { tokens } from './tokens';
 
-export const createMixin = (rule: GriffelStyle): GriffelStyle => ({
+export const createMixin = (rule) => ({
   color: tokens.colorBrandBackground,
   ...rule,
 });

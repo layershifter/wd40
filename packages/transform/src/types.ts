@@ -1,5 +1,4 @@
 import * as ESTree from 'estree';
-import type { ViteNodeRunner } from 'vite-node/client';
 
 export type TransformUtils = {
   appendCSSText: (text: string) => void;
@@ -24,6 +23,3 @@ export type ModuleConfig = {
     [local: string]: ModuleSpecifierHandler;
   };
 };
-
-export type ModuleRunner = ViteNodeRunner;
-export type ModuleRunnerResolveId = ViteNodeRunner['options']['resolveId'];

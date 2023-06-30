@@ -1,13 +1,17 @@
 import { transformAsync } from '@babel/core';
+import { shakerPlugin } from '@linaria/shaker';
 
 import { preevalPlugin } from './preevalPlugin';
 
-export async function postProcess(code: string): Promise<string> {
+export async function preProcess(
+  code: string,
+  specifiers: string[]
+): Promise<string> {
   const result = await transformAsync(code, {
     babelrc: false,
     configFile: false,
 
-    plugins: [preevalPlugin],
+    plugins: [[shakerPlugin, { onlyExports: specifiers }], preevalPlugin],
   });
 
   return (result?.code as string) ?? '';

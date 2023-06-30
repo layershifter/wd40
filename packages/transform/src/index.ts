@@ -1,9 +1,4 @@
-export { createModuleRunner } from './evaluator/createModuleRunner';
-export { ASSET_PREFIX, ASSET_SUFFIX } from './evaluator/assetExportPlugin';
+export { ASSET_PREFIX, ASSET_SUFFIX } from './constants';
 export { transform } from './transform';
 
-export type {
-  ModuleConfig,
-  ModuleRunner,
-  ModuleRunnerResolveId,
-} from './types';
+export type { ModuleConfig } from './types';

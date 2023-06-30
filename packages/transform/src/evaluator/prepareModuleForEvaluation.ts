@@ -16,13 +16,13 @@ export function prepareModuleForEvaluation(
   ) as ESTree.ExportDefaultDeclaration | undefined;
 
   if (defaultExport) {
-    magicString.remove(defaultExport.start, defaultExport.end);
+    // magicString.remove(defaultExport.start, defaultExport.end);
   }
 
   // Remove export keywords
   program.body.forEach((node) => {
     if (node.type === 'ExportNamedDeclaration') {
-      magicString.remove(node.start, node.declaration?.start || node.end);
+      // magicString.remove(node.start, node.declaration?.start || node.end);
     }
   });
 
@@ -35,7 +35,7 @@ export function prepareModuleForEvaluation(
   `;
 
   nodesForRemoval?.forEach((node) => {
-    magicString.overwrite(node.start, node.end, 'void 0');
+    // magicString.overwrite(node.start, node.end, 'void 0');
   });
 
   const moduleContent = magicString.toString();

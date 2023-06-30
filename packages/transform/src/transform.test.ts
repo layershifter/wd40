@@ -5,9 +5,7 @@ import * as prettier from 'prettier';
 
 import { createModuleConfig } from '@wd40/integrations-griffel';
 
-import { createModuleRunner } from './evaluator/createModuleRunner';
 import { transform } from './transform';
-import type { ModuleRunner } from './types';
 
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 const prettierConfig = JSON.parse(
@@ -28,9 +26,6 @@ expect.addSnapshotSerializer({
   },
 });
 
-let runner: ModuleRunner;
-let disposeRunner: () => Promise<void>;
-
 async function assertFixture(params: {
   name: string;
   description: string;
@@ -49,7 +44,6 @@ async function assertFixture(params: {
         path.join(fixtureDirectory, 'input.ts'),
         'utf8'
       ),
-      runner,
     });
 
     await expect(result.code).toMatchFileSnapshot(
@@ -65,20 +59,10 @@ async function assertFixture(params: {
 }
 
 describe('transform', () => {
-  beforeAll(async () => {
-    const result = await createModuleRunner();
-
-    runner = result.runner;
-    disposeRunner = result.disposeRunner;
-  });
-
-  afterAll(async () => {
-    await disposeRunner();
-  });
-
   assertFixture({
     description: 'transforms a module',
     name: 'single-call',
+    // only: true,
   });
   assertFixture({
     description: 'transforms multiple calls in a module',
@@ -160,6 +144,12 @@ describe('transform', () => {
     // TODO
     description: '',
     name: 'side-effects-dom',
-    only: true,
+    // only: true,
   });
+  // assertFixture({
+  //   // TODO
+  //   description: '',
+  //   name: 'side-effects-dom-functions',
+  //   // only: true,
+  // });
 });
