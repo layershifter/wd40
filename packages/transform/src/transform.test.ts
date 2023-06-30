@@ -5,6 +5,7 @@ import * as prettier from 'prettier';
 
 import { createModuleConfig } from '@wd40/integrations-griffel';
 
+import { ModuleRunner } from './runner/ModuleRunner';
 import { transform } from './transform';
 
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
@@ -26,6 +27,8 @@ expect.addSnapshotSerializer({
   },
 });
 
+let runner: ModuleRunner;
+
 async function assertFixture(params: {
   name: string;
   description: string;
@@ -44,6 +47,7 @@ async function assertFixture(params: {
         path.join(fixtureDirectory, 'input.ts'),
         'utf8'
       ),
+      runner,
     });
 
     await expect(result.code).toMatchFileSnapshot(
@@ -59,6 +63,14 @@ async function assertFixture(params: {
 }
 
 describe('transform', () => {
+  beforeAll(() => {
+    runner = new ModuleRunner();
+  });
+
+  afterAll(() => {
+    // runner.dispose();
+  });
+
   assertFixture({
     description: 'transforms a module',
     name: 'single-call',

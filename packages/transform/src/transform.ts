@@ -5,7 +5,7 @@ import { asyncWalk } from 'estree-walker';
 import MagicString from 'magic-string';
 
 import { prepareModuleForEvaluation } from './evaluator/prepareModuleForEvaluation';
-import { evaluateModule } from './runner/evaluateModule';
+import { ModuleRunner } from './runner/ModuleRunner';
 import type { ModuleConfig, ModuleSpecifierHandler } from './types';
 
 declare module 'acorn' {
@@ -25,6 +25,8 @@ type TransformParams = {
 
   filename: string;
   moduleConfig: ModuleConfig[];
+
+  runner: ModuleRunner;
 };
 
 export async function transform(params: TransformParams): Promise<{
@@ -32,7 +34,7 @@ export async function transform(params: TransformParams): Promise<{
   map: null | SourceMap;
   cssText: string;
 }> {
-  const { filename, moduleConfig, sourceCode } = params;
+  const { filename, moduleConfig, runner, sourceCode } = params;
 
   // TODO: do early exit if there are no imports
 
@@ -170,11 +172,9 @@ export async function transform(params: TransformParams): Promise<{
     //   evaluations.map((evaluation) => evaluation.nodes.length)
     // );
     // console.log('transform:filename', filename);
-    const { __module: result } = await evaluateModule<{ __module: unknown[] }>(
-      codeToEvaluate,
-      filename,
-      ['__module']
-    );
+    const { __module: result } = await runner.evaluateModule<{
+      __module: unknown[];
+    }>(codeToEvaluate, filename, ['__module']);
 
     for (let i = 0, offset = 0; i < evaluations.length; i++) {
       const evaluation = evaluations[i];
