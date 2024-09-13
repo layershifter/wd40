@@ -9,10 +9,10 @@ import empty from './empty.jpg';
 export const useStyles = ___styles0(
   {
     root: {
-      Bcmaq0h: 'fyxwick',
+      Bcmaq0h: 'f1p09hjx',
     },
   },
   {
-    d: [`.fyxwick{background-image:url(${_asset1}),url(${_asset2});}`],
+    d: [`.f1p09hjx{background-image:url(${_asset1}),url(${_asset2});}`],
   }
 );

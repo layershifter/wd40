@@ -3,6 +3,6 @@ import { makeStyles } from '@griffel/core';
 
 export const classes = ___css0({
   media: {
-    Bulngiv: 'fr5o61b',
+    Bn3jx5e: 'ful25cn',
   },
 });

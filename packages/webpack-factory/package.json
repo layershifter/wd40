@@ -1,0 +1,7 @@
+{
+  "name": "@wd40/webpack-factory",
+    "version": "0.0.1",
+  "dependencies": {
+    "@wd40/transform": "^0.0.1"
+  }
+}

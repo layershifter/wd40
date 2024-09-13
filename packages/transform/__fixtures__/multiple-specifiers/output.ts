@@ -1,8 +1,8 @@
-import { __resetStyles as ___resetStyles1 } from '@griffel/core';
-import { __styles as ___styles0 } from '@griffel/core';
+import { __styles as ___styles1 } from '@griffel/core';
+import { __resetStyles as ___resetStyles0 } from '@griffel/core';
 import { makeResetStyles, makeStyles } from '@griffel/core';
 
-export const classesA = ___styles0(
+export const classesA = ___styles1(
   {
     root: {
       sj55zd: 'fka9v86',
@@ -13,6 +13,6 @@ export const classesA = ___styles0(
   }
 );
 
-export const classesB = ___resetStyles1('r14ksm7b', null, [
+export const classesB = ___resetStyles0('r14ksm7b', null, [
   '.r14ksm7b{color:blue;}',
 ]);

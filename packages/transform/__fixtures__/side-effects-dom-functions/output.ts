@@ -1,6 +1,14 @@
 import { __styles as ___styles0 } from '@griffel/core';
 import { makeStyles } from '@griffel/core';
 
+import { runNearFramePaint } from './utils';
+
+const element = document.createElement('div');
+
+runNearFramePaint(() => {
+  console.log('Hello world');
+});
+
 export const classes = ___styles0(
   {
     root: {

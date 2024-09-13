@@ -4,8 +4,7 @@ import MagicString from 'magic-string';
 export function prepareModuleForEvaluation(
   sourceCode: string,
   program: ESTree.Program,
-  nodes: ESTree.Node[],
-  nodesForRemoval?: ESTree.Node[]
+  nodes: ESTree.Node[]
 ): string {
   const magicString = new MagicString(sourceCode);
 
@@ -33,10 +32,6 @@ export function prepareModuleForEvaluation(
           .join(',')}
     ];
   `;
-
-  nodesForRemoval?.forEach((node) => {
-    // magicString.overwrite(node.start, node.end, 'void 0');
-  });
 
   const moduleContent = magicString.toString();
 

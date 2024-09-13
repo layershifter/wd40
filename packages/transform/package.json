@@ -1,0 +1,9 @@
+{
+  "name": "@wd40/transform",
+  "version": "0.0.1",
+  "dependencies": {
+    "@wd40/native-shaker": "^0.0.1",
+    "oxc-parser": "^0.27.0",
+    "oxc-resolver": "^1.11.0"
+  }
+}

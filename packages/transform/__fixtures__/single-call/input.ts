@@ -1,8 +1,8 @@
-import { makeStyles, shorthands } from '@griffel/core';
+import { makeStyles } from '@griffel/core';
 
 export const classes = makeStyles({
   root: {
     color: 'red',
-    ...shorthands.padding('5px'),
+    padding: '5px',
   },
 });

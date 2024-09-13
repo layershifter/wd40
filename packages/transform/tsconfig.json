@@ -17,7 +17,8 @@
     "noUnusedParameters": true,
     "noImplicitReturns": true,
     "paths": {
-      "@wd40/integrations-griffel": ["../../integrations/griffel/src/index.ts"]
+      "@wd40/integrations-griffel": ["../../integrations/griffel/src/index.ts"],
+      "@wd40/native-shaker": ["../../packages/native-shaker"],
     }
   },
   "files": [],

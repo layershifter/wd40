@@ -8,8 +8,8 @@ import blankDuplicate from './blank.jpg';
 import _asset3 from './empty.jpg';
 import empty from './empty.jpg';
 
-export const useStyles = ___resetStyles0('rpyfkbo', null, [
-  `.rpyfkbo{background-image:url(${_asset1});}`,
-  `.rpyfkbo:hover{background-image:url(${_asset2});}`,
-  `.rpyfkbo:focus{background-image:url(${_asset3});}`,
+export const useStyles = ___resetStyles0('rh4h41b', null, [
+  `.rh4h41b{background-image:url(${_asset1});}`,
+  `.rh4h41b:hover{background-image:url(${_asset2});}`,
+  `.rh4h41b:focus{background-image:url(${_asset3});}`,
 ]);

@@ -1,15 +1,14 @@
 /** @griffel:css-start [d] **/
-.f1x92mjp {
-  background-image: url(@wd40:/Users/olfedias/WebstormProjects/wd40-2/packages/transform/__fixtures__/mode-css-assets/blank.jpg:@wd40);
+.fw7szfx {
+  background-image: url(@wd40:/Users/olfedias/WebstormProjects/wd40/packages/transform/__fixtures__/mode-css-assets/blank.jpg:@wd40);
 }
-.f1bkjipg {
-  background-image: url('@wd40:/Users/olfedias/WebstormProjects/wd40-2/packages/transform/__fixtures__/mode-css-assets/blank.jpg:@wd40');
+.f18743zb {
+  background-image: url('@wd40:/Users/olfedias/WebstormProjects/wd40/packages/transform/__fixtures__/mode-css-assets/blank.jpg:@wd40');
 }
-.f1dja8h {
-  background-image: url(@wd40:/Users/olfedias/WebstormProjects/wd40-2/packages/transform/__fixtures__/mode-css-assets/empty.jpg:@wd40);
+.f9a0wry {
+  background-image: url(@wd40:/Users/olfedias/WebstormProjects/wd40/packages/transform/__fixtures__/mode-css-assets/empty.jpg:@wd40);
 }
 .f12vvth1 {
-  -webkit-filter: url(./a.svg#a);
   filter: url(./a.svg#a);
 }
 /** @griffel:css-end **/

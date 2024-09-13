@@ -1,0 +1,8 @@
+{
+  "name": "@wd40/integrations-griffel",
+    "version": "0.0.1",
+  "dependencies": {
+    "@griffel/core": "^1.18.0",
+    "@wd40/transform": "^0.0.1"
+  }
+}

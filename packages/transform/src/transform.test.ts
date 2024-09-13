@@ -5,7 +5,11 @@ import * as prettier from 'prettier';
 
 import { createModuleConfig } from '@wd40/integrations-griffel';
 
-import { ModuleRunner } from './runner/ModuleRunner';
+import { FileSystemService } from './FileSystemService';
+import { ModuleService } from './ModuleService';
+import { PerformanceService } from './PerformanceService';
+import { ResolverService } from './ResolverService';
+import { createModuleService } from './createModuleService';
 import { transform } from './transform';
 
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
@@ -27,7 +31,7 @@ expect.addSnapshotSerializer({
   },
 });
 
-let runner: ModuleRunner;
+let moduleService: ModuleService;
 
 async function assertFixture(params: {
   name: string;
@@ -47,7 +51,8 @@ async function assertFixture(params: {
         path.join(fixtureDirectory, 'input.ts'),
         'utf8'
       ),
-      runner,
+      moduleService,
+      // runner,
     });
 
     await expect(result.code).toMatchFileSnapshot(
@@ -64,7 +69,7 @@ async function assertFixture(params: {
 
 describe('transform', () => {
   beforeAll(() => {
-    runner = new ModuleRunner();
+    moduleService = createModuleService();
   });
 
   afterAll(() => {
@@ -79,16 +84,37 @@ describe('transform', () => {
   assertFixture({
     description: 'transforms multiple calls in a module',
     name: 'multiple-calls',
+    // only: true,
   });
   assertFixture({
     description: 'transforms multiple specifiers in a module',
     name: 'multiple-specifiers',
+    // only: true,
+  });
+  assertFixture({
+    // TODO
+    description: '',
+    name: 'rules-with-metadata',
+    // only: true,
   });
 
   assertFixture({
     // TODO
     description: '',
-    name: 'rules-with-metadata',
+    name: 'import',
+    only: true,
+  });
+  assertFixture({
+    // TODO
+    description: '',
+    name: 'import-default',
+    // only: true,
+  });
+  assertFixture({
+    // TODO
+    description: '',
+    name: 'import-shared-module',
+    // only: true,
   });
 
   assertFixture({
@@ -105,6 +131,7 @@ describe('transform', () => {
     // TODO
     description: '',
     name: 'import-duplicates',
+    // only: true,
   });
 
   // Assets handling
@@ -113,6 +140,7 @@ describe('transform', () => {
     // TODO
     description: '',
     name: 'assets',
+    // only: true,
   });
   assertFixture({
     // TODO
@@ -137,12 +165,14 @@ describe('transform', () => {
     description: '',
     name: 'mode-css-simple',
     mode: 'extract-css',
+    // only: true,
   });
   assertFixture({
     // TODO
     description: '',
     name: 'mode-css-assets',
     mode: 'extract-css',
+    // only: true,
   });
   assertFixture({
     // TODO
@@ -158,10 +188,10 @@ describe('transform', () => {
     name: 'side-effects-dom',
     // only: true,
   });
-  // assertFixture({
-  //   // TODO
-  //   description: '',
-  //   name: 'side-effects-dom-functions',
-  //   // only: true,
-  // });
+  assertFixture({
+    // TODO
+    description: '',
+    name: 'side-effects-dom-functions',
+    // only: true,
+  });
 });
